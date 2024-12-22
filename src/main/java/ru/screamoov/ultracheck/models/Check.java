@@ -7,6 +7,9 @@ import ru.screamoov.ultracheck.Main;
 import ru.screamoov.ultracheck.configurations.Configuration;
 import ru.screamoov.ultracheck.configurations.Logs;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.UUID;
 
@@ -18,10 +21,12 @@ public class Check {
     public boolean stopped;
     public Status checkStatus;
     public UUID uuid;
+    public LocalDate startDate;
 
     public Check(Player player, Player moderator) {
         this.player = player;
         this.moderator = moderator;
+        startDate = LocalDate.now();
         playerName = player.getName();
         uuid = new UUID(new Random().nextLong(), new Random().nextLong());
         time = 0;
@@ -37,7 +42,18 @@ public class Check {
                     this.cancel();
                 }
 
-                Logs.config.set(String.valueOf(uuid), "");
+                LocalDate localDate = LocalDate.now();
+                String stopTime = localDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+                Logs.config.set(uuid + ".start-time", startDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
+                Logs.config.set(uuid + ".stop-time", stopTime);
+                Logs.config.set(uuid + ".seconds", time);
+                Logs.config.set(uuid + ".status", checkStatus);
+                Logs.config.set(uuid + ".uuid", uuid.toString());
+                Logs.config.set(uuid + ".moderator", moderator.getName() + " (IP: " + player.getAddress().getAddress().getHostAddress() + ")");
+                Logs.config.set(uuid + ".player", player.getName() + " (IP: " + player.getAddress().getAddress().getHostAddress() + ")");
+                Logs.config.set(uuid + ".stopped", stopped);
+
+                Logs.save(Logs.config, Logs.file);
             }
         }.runTaskTimer(Main.getInstance(), 20L, 20L);
     }
