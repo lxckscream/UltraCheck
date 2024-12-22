@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.screamoov.ultracheck.configurations.Configuration;
 import ru.screamoov.ultracheck.configurations.Logs;
+import ru.screamoov.ultracheck.controllers.PlayerController;
 import ru.screamoov.ultracheck.managers.ChecksManager;
 import ru.screamoov.ultracheck.models.Check;
 import ru.screamoov.ultracheck.models.Status;
@@ -19,8 +20,8 @@ public final class Main extends JavaPlugin {
         checksManager = new ChecksManager();
         Configuration.init();
         Logs.init();
-
-        Bukkit.getPluginManager().registerEvents();
+n
+        Bukkit.getPluginManager().registerEvents(new PlayerController(), this);
     }
 
     @Override
