@@ -20,7 +20,7 @@ public final class Main extends JavaPlugin {
         checksManager = new ChecksManager();
         Configuration.init();
         Logs.init();
-n
+
         Bukkit.getPluginManager().registerEvents(new PlayerController(), this);
     }
 
