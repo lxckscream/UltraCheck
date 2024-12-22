@@ -22,11 +22,13 @@ public class Check {
     public Status checkStatus;
     public UUID uuid;
     public LocalDate startDate;
+    public LocalTime startTime;
 
     public Check(Player player, Player moderator) {
         this.player = player;
         this.moderator = moderator;
         startDate = LocalDate.now();
+        startTime = LocalTime.now();
         playerName = player.getName();
         uuid = new UUID(new Random().nextLong(), new Random().nextLong());
         time = 0;
@@ -43,9 +45,11 @@ public class Check {
                 }
 
                 LocalDate localDate = LocalDate.now();
-                String stopTime = localDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
-                Logs.config.set(uuid + ".start-time", startDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
-                Logs.config.set(uuid + ".stop-time", stopTime);
+                LocalTime localTime = LocalTime.now();
+                String stopDate = localDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+                String stopTime = localTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+                Logs.config.set(uuid + ".start-time", startDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " | " + startTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                Logs.config.set(uuid + ".stop-time", stopDate + " | " + stopTime);
                 Logs.config.set(uuid + ".seconds", time);
                 Logs.config.set(uuid + ".status", checkStatus);
                 Logs.config.set(uuid + ".uuid", uuid.toString());
