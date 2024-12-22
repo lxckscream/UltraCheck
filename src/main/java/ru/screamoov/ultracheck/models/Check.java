@@ -7,6 +7,7 @@ import ru.screamoov.ultracheck.Main;
 import ru.screamoov.ultracheck.configurations.Configuration;
 import ru.screamoov.ultracheck.configurations.Logs;
 
+import java.util.Random;
 import java.util.UUID;
 
 public class Check {
@@ -22,7 +23,7 @@ public class Check {
         this.player = player;
         this.moderator = moderator;
         playerName = player.getName();
-        uuid = new UUID(2, 2);
+        uuid = new UUID(new Random().nextLong(), new Random().nextLong());
         time = 0;
         new BukkitRunnable() {
             public void run() {
