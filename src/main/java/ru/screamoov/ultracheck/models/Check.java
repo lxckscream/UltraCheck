@@ -20,12 +20,13 @@ public class Check {
         new BukkitRunnable() {
             public void run() {
                 if (!stopped) {
-
+                    time++;
                 } else {
                     if (checkStatus == Status.FAILED) executeFailedActions();
                     else if (checkStatus == Status.KEEPING) executeKeepingActions();
                     else if (checkStatus == Status.LEAVED) executeLeaveActions();
                     else executePassedActions();
+                    this.cancel();
                 }
             }
         }.runTaskTimer(Main.getInstance(), 20L, 20L);
@@ -33,13 +34,9 @@ public class Check {
 
     private void executePassedActions() {
         Configuration.config.getStringList("actions.passed").forEach(action -> {
-            Action actionModel = new Action(action);
+            Action actionModel = new Action(action, this);
             actionModel.process();
-            if (actionModel.processed) {
-
-            } else {
-                moderator.sendMessage(ChatColor.RED + "Error occurred while processing action: " + action + "!");
-            }
+            if (!actionModel.processed) moderator.sendMessage(ChatColor.RED + "Error occurred while processing action: " + action + "!");
         });
     }
 }
