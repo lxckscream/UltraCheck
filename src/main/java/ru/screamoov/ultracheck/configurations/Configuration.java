@@ -22,7 +22,7 @@ public class Configuration {
             }
         }
         config = YamlConfiguration.loadConfiguration(file);
-        setIfNotExist("execute-actions-on-disable", true);
+        setIfNotExist("execute-actions-on-disable", false);
         List<String> leave = new ArrayList<String>();
         leave.add("[CONSOLE] ban %player% Logging out while for checking for prohibited software. -s");
         leave.add("[BROADCAST] &c%player% &7was banned for logging out while checking for prohibited software.");
