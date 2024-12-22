@@ -4,5 +4,6 @@ public enum Status {
     CHECKING,
     PASSED,
     FAILED,
-    KEEPING
+    KEEPING,
+    LEAVED
 }
