@@ -18,12 +18,12 @@ public class Action {
     public void process() {
         String[] actionStrings = this.actionString.split(";");
         switch (actionStrings[0]) {
-            case "[BROADCASE]":
+            case "[BROADCAST]":
                 Bukkit.broadcastMessage(color(actionStrings[1]));
-                break;
+
             case "[CONSOLE]":
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), actionStrings[1].replaceAll("%player%", check.player.getName()));
-                break;
         }
+        processed = true;
     }
 }
