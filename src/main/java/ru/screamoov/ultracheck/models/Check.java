@@ -5,6 +5,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import ru.screamoov.ultracheck.Main;
 import ru.screamoov.ultracheck.configurations.Configuration;
+import ru.screamoov.ultracheck.configurations.Logs;
+
+import java.util.UUID;
 
 public class Check {
     public Player player;
@@ -12,10 +15,12 @@ public class Check {
     public int time;
     public boolean stopped;
     public Status checkStatus;
+    public UUID uuid;
 
     public Check(Player player, Player moderator) {
         this.player = player;
         this.moderator = moderator;
+        uuid = new UUID(6, 6);
         time = 0;
         new BukkitRunnable() {
             public void run() {
@@ -28,12 +33,38 @@ public class Check {
                     else executePassedActions();
                     this.cancel();
                 }
+
+                Logs.config.set(String.valueOf(uuid), "");
             }
         }.runTaskTimer(Main.getInstance(), 20L, 20L);
     }
 
     private void executePassedActions() {
         Configuration.config.getStringList("actions.passed").forEach(action -> {
+            Action actionModel = new Action(action, this);
+            actionModel.process();
+            if (!actionModel.processed) moderator.sendMessage(ChatColor.RED + "Error occurred while processing action: " + action + "!");
+        });
+    }
+
+    private void executeLeaveActions() {
+        Configuration.config.getStringList("actions.leave").forEach(action -> {
+            Action actionModel = new Action(action, this);
+            actionModel.process();
+            if (!actionModel.processed) moderator.sendMessage(ChatColor.RED + "Error occurred while processing action: " + action + "!");
+        });
+    }
+
+    private void executeKeepingActions() {
+        Configuration.config.getStringList("actions.keeping").forEach(action -> {
+            Action actionModel = new Action(action, this);
+            actionModel.process();
+            if (!actionModel.processed) moderator.sendMessage(ChatColor.RED + "Error occurred while processing action: " + action + "!");
+        });
+    }
+
+    private void executeFailedActions() {
+        Configuration.config.getStringList("actions.failed").forEach(action -> {
             Action actionModel = new Action(action, this);
             actionModel.process();
             if (!actionModel.processed) moderator.sendMessage(ChatColor.RED + "Error occurred while processing action: " + action + "!");
