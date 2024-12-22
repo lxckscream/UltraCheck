@@ -1,5 +1,6 @@
 package ru.screamoov.ultracheck;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.screamoov.ultracheck.configurations.Configuration;
 import ru.screamoov.ultracheck.configurations.Logs;
@@ -19,6 +20,7 @@ public final class Main extends JavaPlugin {
         Configuration.init();
         Logs.init();
 
+        Bukkit.getPluginManager().registerEvents();
     }
 
     @Override
