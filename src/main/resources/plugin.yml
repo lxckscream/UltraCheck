@@ -1,0 +1,4 @@
+name: UltraCheck
+version: '${project.version}'
+main: ru.screamoov.ultracheck.Main
+api-version: '1.16'
