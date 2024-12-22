@@ -19,7 +19,7 @@ public class Action {
         String[] actionStrings = this.actionString.split(";");
         switch (actionStrings[0]) {
             case "[BROADCAST]":
-                Bukkit.broadcastMessage(color(actionStrings[1]));
+                Bukkit.broadcastMessage(color(actionStrings[1].replaceAll("%player%", check.player.getName())));
 
             case "[CONSOLE]":
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), actionStrings[1].replaceAll("%player%", check.player.getName()));
