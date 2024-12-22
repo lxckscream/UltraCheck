@@ -1,0 +1,4 @@
+name: UltraCheck
+version: '1.0-SNAPSHOT'
+main: ru.screamoov.ultracheck.Main
+api-version: '1.16'
