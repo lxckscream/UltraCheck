@@ -11,6 +11,7 @@ import java.util.UUID;
 
 public class Check {
     public Player player;
+    public String playerName;
     public Player moderator;
     public int time;
     public boolean stopped;
@@ -20,7 +21,8 @@ public class Check {
     public Check(Player player, Player moderator) {
         this.player = player;
         this.moderator = moderator;
-        uuid = new UUID(6, 6);
+        playerName = player.getName();
+        uuid = new UUID(2, 2);
         time = 0;
         new BukkitRunnable() {
             public void run() {
